@@ -10,6 +10,8 @@ const User = mongoose.model("User", {
   email: {
     type: String,
     required: true,
+    lowercase: true,
+    trim: true,
     validate(value) {
       if (!validator.isEmail(value)) {
         throw new Error("Invalid Email");
@@ -21,6 +23,19 @@ const User = mongoose.model("User", {
     validate(value) {
       if (value < 0) {
         throw new Error("Age must be a positive number");
+      }
+    },
+    default: 0,
+  },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    validate(value) {
+      if (value.length < 7) {
+        throw new Error("password too short");
+      } else if (value.includes("password")) {
+        throw new Error("password too weak");
       }
     },
   },

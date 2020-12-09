@@ -38,46 +38,5 @@ const User = mongoose.model("User", {
     required: true,
     trim: true,
     minlength: 7,
-    validate(value) {
-      if (value.length <= 6) {
-        throw new Error("password too short");
-      } else if (value.includes("password")) {
-        throw new Error("password too weak");
-      }
-    },
   },
 });
-
-const Task = mongoose.model("Task", {
-  description: {
-    required: true,
-    type: String,
-    trim: true,
-  },
-  completed: {
-    type: Boolean,
-    default: false,
-  },
-});
-
-const user = new User({
-  name: "    Ali     ",
-  email: "AlI@kuwar.tk",
-  age: 18,
-  password: "passw",
-});
-
-const task = new Task({
-  description: "complete the module",
-  completed: false,
-});
-
-user
-  .save()
-  .then((result) => console.log(result))
-  .catch((e) => console.log(e));
-
-task
-  .save()
-  .then((result) => console.log(result))
-  .catch((e) => console.log("Our Error: " + e));
