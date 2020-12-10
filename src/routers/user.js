@@ -1,5 +1,4 @@
 const express = require("express");
-
 const User = require("../models/User");
 
 const router = new express.Router();
@@ -9,6 +8,16 @@ router.post("/user", async (req, res) => {
   try {
     await user.save();
     res.status(201).send(user);
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
+router.post("/user/login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findByCredentials(email, password);
+    res.send(user);
   } catch (e) {
     res.status(400).send(e);
   }
