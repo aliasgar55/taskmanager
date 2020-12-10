@@ -64,6 +64,19 @@ app.patch("/user/:id", async (req, res) => {
   }
 });
 
+app.delete("/user/:id", async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const user = await User.findByIdAndRemove(_id);
+    if (!user) {
+      return res.status(404).send();
+    }
+    res.send(user);
+  } catch (e) {
+    res.status(500).send();
+  }
+});
+
 app.post("/task", async (req, res) => {
   const task = new Task(req.body);
   try {
@@ -88,7 +101,7 @@ app.get("/task/:id", async (req, res) => {
   try {
     const task = await Task.findById(_id);
     if (!task) {
-      return res.status(404).send("Task not found");
+      return res.status(404).send({ error: "Task not found" });
     }
     res.send(task);
   } catch (e) {
@@ -118,6 +131,19 @@ app.patch("/task/:id", async (req, res) => {
     res.send(task);
   } catch (e) {
     res.status(400).send(e);
+  }
+});
+
+app.delete("/task/:id", async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const task = await Task.findByIdAndRemove(_id);
+    if (!task) {
+      return res.status(404).send();
+    }
+    res.send(task);
+  } catch (e) {
+    res.status(500).send();
   }
 });
 
