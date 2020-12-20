@@ -1,4 +1,5 @@
 const express = require("express");
+const multer = require("multer");
 const User = require("../models/User");
 const auth = require("../middleware/auth");
 
@@ -70,6 +71,13 @@ router.delete("/user/me", auth, async (req, res) => {
   } catch (e) {
     res.status(500).send();
   }
+});
+
+const upload = multer({
+  dest: "avatar",
+});
+router.post("/user/me/avatar", upload.single("avatar"), (req, res) => {
+  res.send();
 });
 
 module.exports = router;

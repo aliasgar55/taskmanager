@@ -1,7 +1,6 @@
 const express = require("express");
 
 const Task = require("../models/Task");
-const User = require("../models/User");
 const auth = require("../middleware/auth");
 
 const router = new express.Router();
@@ -36,7 +35,7 @@ router.get("/task", auth, async (req, res) => {
         match,
         options: {
           limit: parseInt(req.query.limit),
-          skip: parseInt(req.query.skip),
+          skip: parseInt((req.query.page - 1) * req.query.limit),
           sort,
         },
       })
