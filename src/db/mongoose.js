@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/task-manager-api", {
+  .connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("connected to database");
+    // console.log("connected to database");
   })
-  .catch(() => console.log("connot connect to database"));
+  .catch(() => {});
